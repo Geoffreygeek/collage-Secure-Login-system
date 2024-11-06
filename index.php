@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 include 'database-connect.php';
 
 $message = "";
@@ -55,42 +57,116 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register & Login</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #e0f7fa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { max-width: 400px; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); }
-        h2 { color: #007bb5; text-align: center; }
-        form { display: flex; flex-direction: column; }
-        input[type="text"], input[type="email"], input[type="password"], input[type="submit"] { padding: 10px; margin: 8px 0; border: 1px solid #007bb5; border-radius: 4px; }
-        input[type="submit"] { background-color: #007bb5; color: white; font-weight: bold; cursor: pointer; }
-        input[type="submit"]:hover { background-color: #005f8f; }
-        .message { color: red; text-align: center; }
-        .switch { text-align: center; margin-top: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: #007bb5;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="submit"] {
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #007bb5;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bb5;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #005f8f;
+        }
+        .message {
+            color: red;
+            text-align: center;
+        }
+        .toggle {
+            text-align: center;
+            margin-top: 10px;
+            color: #007bb5;
+            cursor: pointer;
+        }
+        .toggle:hover {
+            color: #005f8f;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h2>Register</h2>
-        <div class="message"><?= $message ?></div>
-        <form action="" method="post">
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="text" name="phone" placeholder="Phone" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="text" name="position" placeholder="Position" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            <input type="submit" name="register" value="Register">
-        </form>
 
-        <h2>Login</h2>
-        <form action="" method="post">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" name="login" value="Login">
-        </form>
+<body>
+
+    <div class="container">
+        <div class="message"><?= $message ?></div>
+
+        <!-- Register Form -->
+        <div id="register-section" class="form-section active">
+            <h2>Register</h2>
+            <form action="" method="post">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="phone" placeholder="Phone" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="position" placeholder="Position" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <input type="submit" name="register" value="Register">
+            </form>
+            <div class="toggle" onclick="toggleForm('login')">Already have an account? Login</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-section" class="form-section">
+            <h2>Login</h2>
+            <form action="" method="post">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" name="login" value="Login">
+            </form>
+            <div class="toggle" onclick="toggleForm('register')">Don’t have an account? Register</div>
+        </div>
     </div>
+
+    <script>
+        function toggleForm(section) {
+            document.getElementById('register-section').classList.remove('active');
+            document.getElementById('login-section').classList.remove('active');
+            document.getElementById(section + '-section').classList.add('active');
+        }
+    </script>
+
 </body>
+
 </html>
